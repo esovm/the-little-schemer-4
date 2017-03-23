@@ -223,5 +223,93 @@
 (def one?
   "returns true if `a` is 1"
   (fn [a]
-    (= a 1))) 
+    (= a 1)))
+
+(def rember*
+  "removes all `a` anywhere in `l`"
+  (fn [a l]
+    (cond
+      (null? l) ()
+      (atom? (first l)) (cond
+                          (= a (first l)) (rember* a (rest l))
+                          true (cons (first l) (rember* a (rest l))))
+      true (cons (rember* a (first l)) (rember* a (rest l))))))
+
+(def insertR*
+  "inserts `nu` to the right of all `old`s in `l`,
+  regardless of where `old` occurs"
+  (fn [nu old l]
+    (cond
+      (null? l) ()
+      (atom? (first l)) (cond
+                          (= (first l) old)
+                          (cons old (cons nu (insertR* nu old (rest l))))
+                          true (cons (first l) (insertR* nu old (rest l))))
+      true (cons (insertR* nu old (first l)) (insertR* nu old (rest l))))))
+
+(def occur*
+  "returns the number of occurrences of `a` in `l`"
+  (fn [a l]
+    (cond
+      (null? l) 0
+      (atom? (first l)) (cond
+                          (= a (first l)) (+ 1 (occur* a (rest l)))
+                          true (occur* a (rest l)))
+      true (+ (occur* a (first l)) (occur* a (rest l))))))
+
+(def subst*
+  "substitutes `nu` for `old` in `l`"
+  (fn [nu old l]
+    (cond
+      (null? l) ()
+      (atom? (first l)) (cond
+                          (= (first l) old)
+                          (cons nu (subst* nu old (rest l)))
+                          true (cons (first l) (subst* nu old (rest l))))
+      true (cons (subst* nu old (first l)) (subst* nu old (rest l))))))
+
+(def insertL*
+  "inserts `nu` to the left of all `old`s in `l`"
+  (fn [nu old l]
+    (cond
+      (null? l) ()
+      (atom? (first l)) (cond
+                          (= old (first l))
+                          (cons nu (cons old (insertL* nu old (rest l))))
+                          true (cons (first l) (insertL* nu old (rest l))))
+      true (cons (insertL* nu old (first l)) (insertL* nu old (rest l))))))
+
+(def member*
+  "returns true if `a` appears at least once wherever in `l`"
+  (fn [a l]
+    (cond
+      (null? l) false
+      (atom? (first l)) (cond
+                          (= a (first l)) true
+                          true (member* a (rest l)))
+      true (or (member* a (first l)) (member* a (rest l))))))
+
+
+(def leftmost*
+  "returns the leftmost atom in `l` provided it's not an
+  empty list"
+  (fn [l]
+    (cond
+      (null? l) nil
+      (atom? (first l)) (first l)
+      true (leftmost* (first l)))))
+
+(def eqlist*
+  "checks all elements of `l1` and `l2` for equality,
+  returns true if all of those return true"
+  (fn [l1 l2]
+    ;; TODO implement me
+    ))
+
+(def equal?
+  "returns true if `s1` is the same as `s2`"
+  (fn [s1 s2]
+    ;; TODO implement me
+    ))
+
 

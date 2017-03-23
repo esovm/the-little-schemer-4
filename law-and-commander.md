@@ -29,7 +29,12 @@ The primitive `eq?` takes two arguments. Each must be a non-numeric argument.
 
 #### The first commandment
 
-Always ask `null?` as the first question in expressing any function.
+When recurring on a list of atoms, `lat`, ask two questions about it: 
+`(null? lat)` and `else`.<br />
+When recurring on a number, `n`, ask two questions about it: `(zero? n)` and
+`else`.<br />
+When recurring on a list of S-expressions, `l`, ask three questions about it:
+`(null? l)`, `(atom? (car l))`, and `else`.
 
 #### The second commandment
 
@@ -42,9 +47,15 @@ onto the natural recursion.
 
 #### The fourth commandment
 
-Always change at least one argument while recurring. It must be changed closer
-to termination. The changing argument must be tested in the termination 
-condition: when using `cdr`, test termination with `null?`.
+Always change at least one argument while recurring.<br />
+When recurring on a list of atoms, `lat` use `(cdr lat)`.<br />
+When recurring on a number, `n`, use `(sub1 n)`.<br />
+When recurring on a list of S-expressions, `l`, use `(car l)` and `(cdr l)`, if
+neither `(null? l)` nor `(atom? (car l))` are true.
+
+It must be changed closer to termination. The changing argument must be tested
+in the termination condition: when using `cdr`, test termination with `null?`,
+when using `sub1`, test termination with `zero?`.
 
 #### The fifth commandment
 
@@ -56,3 +67,9 @@ line, for multiplying 1 does not change the value of a multiplication.
 
 When building a value with `cons`, always consider `()` for the value of the 
 terminating line.
+
+#### The sixth commandment
+
+Simplify only after the function is correct.
+
+
