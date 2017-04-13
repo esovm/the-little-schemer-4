@@ -72,4 +72,15 @@ terminating line.
 
 Simplify only after the function is correct.
 
+#### The seventh commandment
+
+Recur on the subparts that are of the same nature:
+ 
+ * on the sublists of a list
+ * on the subexpressions of an arithmetic expression
+
+#### The eight commandment
+
+Use help functions to abstract from representations.
+
 
