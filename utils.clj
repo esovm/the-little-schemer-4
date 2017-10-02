@@ -303,13 +303,13 @@
   returns true if all of those return true"
   (fn [l1 l2]
     ;; TODO implement me
-    ))
+))
 
 (def equal?
   "returns true if `s1` is the same as `s2`"
   (fn [s1 s2]
-    ;; TODO implement me
-    ))
+    ;; meh
+    (= s1 s2)))
 
 (def numbered?
   "returns true if arithmetic expression"
@@ -461,3 +461,50 @@
   "returns true if no second element in each pair is repeated"
   (fn [fun]
     (fun? (revrel fun))))
+
+(def rember-f
+  "removes an occurrence of `a` from `lat` based on `test?`"
+  (fn [test? a lat]
+    (cond
+      (null? lat) '()
+      (test? (first lat) a) (rest lat)
+      true (cons (first lat) (rember-f test? a (rest lat))))))
+
+;; -c stands for curried
+(def eq?-c
+  "curried version of `equal?`"
+  (fn [a]
+    (fn [b]
+      (equal? a b))))
+
+(def rember-f-c
+  "curried version of `rember-f`"
+  (fn [test?]
+    (fn [a lat]
+      (cond
+        (null? lat) '()
+        (test? (first lat) a) (rest lat)
+        true (cons (first lat) ((rember-f-c test?) a (rest lat)))))))
+
+(def insert-left
+  (fn [nu old lat]
+    (cons nu (cons old (rest lat)))))
+(def insert-right
+  (fn [nu old lat]
+    (cons old (cons nu (rest lat)))))
+
+(def insert-g
+  "inserts `nu` on the left or right side of the first occurrence
+  of `old` in `lat`, depending on `order`"
+  (fn [insert nu old lat]
+    (cond
+      (null? lat) '()
+      (= old (first lat)) (insert nu old lat)
+      true (cons (first lat) (insert-g insert nu old (rest lat))))))
+
+(def insert-l)
+
+
+
+
+

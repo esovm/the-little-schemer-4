@@ -83,4 +83,10 @@ Recur on the subparts that are of the same nature:
 
 Use help functions to abstract from representations.
 
+#### The ninth commandment
 
+Abstract common patterns with a new function.
+
+#### The tenth commandment
+
+Build functions to collect more than one value at a time.
